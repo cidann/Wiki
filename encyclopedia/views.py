@@ -35,4 +35,8 @@ def create(request):
                 return HttpResponse("The Entry Already Exist")
         textarea=request.POST["textarea"]
         util.save_entry(title,textarea)
+        return HttpResponseRedirect(reverse("entries",args=[title]))
     return render(request,"encyclopedia/create.html")
+
+def edit(request,entry):
+    return render(request,"encyclopedia/edit.html",{"entry":entry,"content":util.get_entry(entry)})

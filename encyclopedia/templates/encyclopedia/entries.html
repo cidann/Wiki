@@ -6,4 +6,7 @@
 {%block body%}
     <h1>{{entry}}</h1>
     <p>{{content}}</p>
+    <a href="{%url "edit" entry%}">
+        <button class="btn btn-primary mb-2">Edit</button>
+    </a>
 {%endblock%}

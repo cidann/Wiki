@@ -6,7 +6,7 @@
 {%endblock%}
 
 {%block body%}
-    <form method="post">
+    <form action="{%url "create"%}" method="post">
         {%csrf_token%}
         <div class="form-group">
             <label for="title">Title</label>
