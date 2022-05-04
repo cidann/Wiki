@@ -39,4 +39,7 @@ def create(request):
     return render(request,"encyclopedia/create.html")
 
 def edit(request,entry):
+    if request.method=="POST":
+        util.save_entry(entry,request.POST["textarea"])
+        return HttpResponseRedirect(reverse("entries",args=[entry]))
     return render(request,"encyclopedia/edit.html",{"entry":entry,"content":util.get_entry(entry)})
