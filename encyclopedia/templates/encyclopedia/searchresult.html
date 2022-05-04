@@ -1,0 +1,15 @@
+{%extends "encyclopedia/layout.html"%}
+
+{%block title%}
+    Search Result-{{entry}}
+{%endblock%}
+
+{%block body%}
+    <h1>Relate Search Result</h1>
+    <ul>
+        {%for entry in search%}
+            <a href="{%url "entries" entry%}"><li>{{entry}}</li></a>
+            {%empty%}No search result for "{{entry}}"
+        {%endfor%}
+    </ul>     
+{%endblock%}
