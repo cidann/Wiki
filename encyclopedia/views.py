@@ -2,17 +2,16 @@ from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
 from django import forms
 from django.urls import reverse
+from random import random
 from . import util
 
-class SearchForm(forms.Form):
-    search=forms.CharField(label="")
 
 def index(request):
     if request.method=="POST":
         search=request.POST["q"]
         return HttpResponseRedirect(reverse("entries",args=[search]))
     return render(request, "encyclopedia/index.html", {
-        "entries": util.list_entries(),"form":SearchForm()
+        "entries": util.list_entries()
     })
 
 def entries(request, entry):
@@ -43,3 +42,8 @@ def edit(request,entry):
         util.save_entry(entry,request.POST["textarea"])
         return HttpResponseRedirect(reverse("entries",args=[entry]))
     return render(request,"encyclopedia/edit.html",{"entry":entry,"content":util.get_entry(entry)})
+
+def randomentry(request):
+    randomEntryNumber = int(random()*len(util.list_entries()))
+    entry=(util.list_entries())[randomEntryNumber]
+    return HttpResponseRedirect(reverse("entries",args=[entry]))
