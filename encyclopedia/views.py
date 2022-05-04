@@ -6,6 +6,7 @@ from random import random
 from . import util
 
 
+
 def index(request):
     if request.method=="POST":
         search=request.POST["q"]
@@ -18,7 +19,8 @@ def entries(request, entry):
     for i in util.list_entries():
         if entry.casefold()==i.casefold():
             entry=i
-            return render(request, "encyclopedia/entries.html", {"entry": entry, "content": util.get_entry(entry)})
+            content=util.convert(util.get_entry(entry))
+            return render(request, "encyclopedia/entries.html", {"entry": entry, "content": content})
     search=[]
     for i in util.list_entries():
         if entry.casefold() in i.casefold():

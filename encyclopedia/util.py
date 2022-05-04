@@ -35,3 +35,29 @@ def get_entry(title):
         return f.read().decode("utf-8")
     except FileNotFoundError:
         return None
+
+def convert(md_data):
+    header=(re.findall("(#.+?)\r",md_data))
+    anchar=(re.findall("\[.+?]\(.+?\)",md_data))
+    list=(re.findall("(\*.+?)\n",md_data))
+    bold=(re.findall("(\*\*.+?\*\*)",md_data))
+    print(list)
+    for h in header:
+        md_data=md_data.replace(h,f"<h1>{h[1:]}</h1>")
+    for a in anchar:
+        linkname=re.split("]\(",a)[0][1:]
+        link=re.split("]\(",a)[1][:-1]
+        md_data = md_data.replace(a, f"<a href={link}>{linkname}</a>")
+    for b in bold:
+        md_data=md_data.replace(b,f"<b>{b[2:-2]}</b>")
+    if list:
+        for l in list:
+            if l==list[0]:
+                md_data = md_data.replace(l, f"<ul><li>{l[1:]}</li>")
+            elif l == list[-1]:
+                md_data = md_data.replace(l, f"<li>{l[1:]}</li></ul>")
+            else:
+                md_data=md_data.replace(l,f"<li>{l[1:]}</li>")
+    return md_data
+
+
