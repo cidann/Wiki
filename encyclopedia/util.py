@@ -37,7 +37,7 @@ def get_entry(title):
         return None
 
 def convert(md_data):
-    header=(re.findall("(#.+?)\r",md_data))
+    header=(re.findall("(#.+?)[\r\n]",md_data))
     anchar=(re.findall("\[.+?]\(.+?\)",md_data))
     list=(re.findall("(\*.+?)\n",md_data))
     bold=(re.findall("(\*\*.+?\*\*)",md_data))
